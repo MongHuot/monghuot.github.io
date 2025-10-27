@@ -138,6 +138,78 @@
             background-color: #2563eb;
             transform: scale(1.1);
         }
+
+        /* --- Animated Scroll Down Arrow --- */
+        #scroll-down-arrow {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            transition: opacity 0.5s ease-out;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        .bounce {
+            animation: bounce 2.5s infinite;
+        }
+        
+        /* --- Gradient Border Cards (for Skills & Projects) --- */
+        .gradient-border-card {
+            position: relative;
+            z-index: 1;
+            background-color: #171717; /* Darker card background */
+            border: 1px solid #27272a; /* Slightly lighter border */
+            transition: all 0.3s ease;
+        }
+        .gradient-border-card::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            background: linear-gradient(to right, #3b82f6, #a855f7);
+            background-size: 200% 200%;
+            z-index: -1;
+            border-radius: 0.625rem; /* 10px */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            animation: gradient-shift 6s ease infinite;
+        }
+        .gradient-border-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1), 0 5px 15px rgba(59, 130, 246, 0.1);
+            border-color: transparent;
+        }
+        .gradient-border-card:hover::before {
+            opacity: 1;
+        }
+        /* Override Tailwind bg for gradient cards */
+        .gradient-border-card {
+            background-color: #111111; /* Even darker for more contrast */
+        }
+        
+        /* --- About Me Image Gradient Border --- */
+        .image-gradient-border {
+            position: relative;
+            padding: 4px; /* Border thickness */
+            border-radius: 0.625rem; /* 10px */
+            background: linear-gradient(to right, #3b82f6, #a855f7);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
+        }
+        .image-gradient-border img {
+            border-radius: 0.375rem; /* 6px, slightly less than parent */
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -177,9 +249,10 @@
     <main class="container mx-auto px-6">
 
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center text-center pt-20">
+        <section id="home" class="relative min-h-screen flex items-center justify-center text-center pt-20">
             <div id="hero-content" class="transition-opacity duration-500">
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight">
+                <span class="text-lg md:text-xl font-medium text-gray-400">Hi, I'm MONGHUOT</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mt-2">
                     Software Developer
                     <span class="block gradient-text">& Graphic Designer</span>
                 </h1>
@@ -195,14 +268,20 @@
                     </a>
                 </div>
             </div>
+            <!-- Scroll Down Arrow -->
+            <div id="scroll-down-arrow" class="bounce">
+                <a href="#about" aria-label="Scroll down">
+                    <i class="fas fa-arrow-down text-gray-400 text-2xl"></i>
+                </a>
+            </div>
         </section>
 
         <!-- About Me Section -->
         <section id="about" class="py-24 fade-in-section">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <!-- Placeholder for your photo -->
-                <div class="w-full h-80 bg-gray-800 rounded-lg shadow-xl flex items-center justify-center">
-                    <img src="https://placehold.co/400x400/171717/e0e0e0?text=MONGHUOT" alt="A professional photo of MONGHUOT" class="w-full h-full object-cover rounded-lg">
+                <div class="w-full h-80 rounded-lg shadow-xl flex items-center justify-center image-gradient-border">
+                    <img src="https://placehold.co/400x400/171717/e0e0e0?text=MONGHUOT" alt="A professional photo of MONGHUOT" class="w-full h-full object-cover">
                 </div>
                 <div>
                     <h2 class="text-4xl font-bold text-white mb-6">About Me</h2>
@@ -225,7 +304,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
                 <!-- Category: Frontend & Mobile -->
-                <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-800 transition-all duration-300 hover:border-blue-500 hover:shadow-blue-500/20 transform hover:-translate-y-1">
+                <div class="gradient-border-card p-6 rounded-lg shadow-xl">
                     <i class="fas fa-mobile-alt text-blue-400 text-3xl mb-4"></i>
                     <h3 class="text-2xl font-semibold text-white mb-3">Frontend & Mobile</h3>
                     <ul class="space-y-2 text-gray-300">
@@ -236,7 +315,7 @@
                 </div>
                 
                 <!-- Category: Backend -->
-                <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-800 transition-all duration-300 hover:border-purple-500 hover:shadow-purple-500/20 transform hover:-translate-y-1">
+                <div class="gradient-border-card p-6 rounded-lg shadow-xl">
                     <i class="fas fa-server text-purple-400 text-3xl mb-4"></i>
                     <h3 class="text-2xl font-semibold text-white mb-3">Backend</h3>
                     <ul class="space-y-2 text-gray-300">
@@ -247,7 +326,7 @@
                 </div>
                 
                 <!-- Category: Database -->
-                <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-800 transition-all duration-300 hover:border-green-500 hover:shadow-green-500/20 transform hover:-translate-y-1">
+                <div class="gradient-border-card p-6 rounded-lg shadow-xl">
                     <i class="fas fa-database text-green-400 text-3xl mb-4"></i>
                     <h3 class="text-2xl font-semibold text-white mb-3">Database & Cloud</h3>
                     <ul class="space-y-2 text-gray-300">
@@ -258,7 +337,7 @@
                 </div>
 
                 <!-- Category: Design -->
-                <div class="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-800 transition-all duration-300 hover:border-pink-500 hover:shadow-pink-500/20 transform hover:-translate-y-1">
+                <div class="gradient-border-card p-6 rounded-lg shadow-xl">
                     <i class="fas fa-palette text-pink-400 text-3xl mb-4"></i>
                     <h3 class="text-2xl font-semibold text-white mb-3">Graphic Design</h3>
                     <ul class="space-y-2 text-gray-300">
@@ -277,8 +356,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Project 1 (e.g., Flutter/Firebase) -->
-                <div class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-blue-500/30">
-                    <img src="https://placehold.co/600x400/171717/3b82f6?text=Flutter+Project" alt="Screenshot of Project 1" class="w-full h-48 object-cover">
+                <div class="gradient-border-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="https://placehold.co/600x400/111111/3b82f6?text=Flutter+Project" alt="Screenshot of Project 1" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-white mb-3">Project Title 1 (e.g., Mobile App)</h3>
                         <p class="text-gray-300 mb-4">
@@ -293,8 +372,8 @@
                 </div>
 
                 <!-- Project 2 (e.g., .NET/SQL) -->
-                <div class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-purple-500/30">
-                    <img src="https://placehold.co/600x400/171717/a855f7?text=.NET+Project" alt="Screenshot of Project 2" class="w-full h-48 object-cover">
+                <div class="gradient-border-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="https://placehold.co/600x400/111111/a855f7?text=.NET+Project" alt="Screenshot of Project 2" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-white mb-3">Project Title 2 (e.g., Web App)</h3>
                         <p class="text-gray-300 mb-4">
@@ -309,8 +388,8 @@
                 </div>
 
                 <!-- Project 3 (e.g., Laravel/Design) -->
-                <div class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-red-500/30">
-                    <img src="https://placehold.co/600x400/171717/f87171?text=Laravel+Project" alt="Screenshot of Project 3" class="w-full h-48 object-cover">
+                <div class="gradient-border-card rounded-lg shadow-xl overflow-hidden">
+                    <img src="https://placehold.co/600x400/111111/f87171?text=Laravel+Project" alt="Screenshot of Project 3" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-white mb-3">Project Title 3 (e.g., Design)</h3>
                         <p class="text-gray-300 mb-4">
@@ -385,6 +464,7 @@
 
             const heroContent = document.getElementById('hero-content');
             const backToTopBtn = document.getElementById('back-to-top-btn');
+            const scrollDownArrow = document.getElementById('scroll-down-arrow');
 
             // --- Scroll Animation (Intersection Observer) ---
             const sections = document.querySelectorAll('.fade-in-section');
@@ -445,7 +525,9 @@
                 // Hero Fade-out Effect
                 const heroHeight = heroContent.parentElement.offsetHeight;
                 const fade = 1 - (scrollY / (heroHeight / 2));
-                heroContent.style.opacity = Math.max(0, fade); // Ensure opacity doesn't go below 0
+                const opacity = Math.max(0, fade); // Ensure opacity doesn't go below 0
+                heroContent.style.opacity = opacity;
+                scrollDownArrow.style.opacity = opacity; // Fade out arrow with hero
 
                 // Back to Top Button
                 if (scrollY > 300) {
@@ -459,4 +541,3 @@
 
 </body>
 </html>
-
